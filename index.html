@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Revvx.Wheels — India's Premier Mini Drift RC Store</title>
+<meta name="description" content="India's premier destination for hobby-grade micro drift RC cars. Jiabalie & Enoze series. Tested, packed and shipped from Kerala."/>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --cyan:#00f5ff;--orange:#ff6b00;--yellow:#ffd700;
+  --bg:#06060f;--bg2:#0b0b18;--bg3:#0f0f1e;--card:#10101e;
+  --border:rgba(0,245,255,0.13);--border2:rgba(0,245,255,0.25);
+  --text:#eaeaf8;--muted:#5e5e7a;--muted2:#888899;
+}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;overflow-x:hidden;}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--cyan);border-radius:2px;}
+img{display:block;}
+
+/* ─── WHATSAPP FLOAT ─── */
+.wa-float{
+  position:fixed;bottom:28px;right:28px;z-index:9999;
+  width:60px;height:60px;border-radius:50%;
+  background:linear-gradient(135deg,#25d366,#128c4a);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 24px rgba(37,211,102,.45),0 0 0 0 rgba(37,211,102,.4);
+  animation:waPulse 2.5s ease infinite;
+  cursor:pointer;text-decoration:none;transition:transform .2s;
+}
+.wa-float:hover{transform:scale(1.1);}
+@keyframes waPulse{
+  0%{box-shadow:0 4px 24px rgba(37,211,102,.45),0 0 0 0 rgba(37,211,102,.4);}
+  70%{box-shadow:0 4px 24px rgba(37,211,102,.45),0 0 0 18px rgba(37,211,102,0);}
+  100%{box-shadow:0 4px 24px rgba(37,211,102,.45),0 0 0 0 rgba(37,211,102,0);}
+}
+.wa-float svg{width:32px;height:32px;fill:#fff;}
+.wa-tooltip{
+  position:fixed;bottom:38px;right:96px;z-index:9998;
+  background:rgba(10,10,20,.95);border:1px solid rgba(37,211,102,.3);
+  color:#25d366;font-family:'Share Tech Mono',monospace;font-size:.68rem;
+  letter-spacing:1.5px;padding:.45rem 1rem;white-space:nowrap;
+  opacity:0;pointer-events:none;transition:opacity .3s;
+}
+.wa-float:hover+.wa-tooltip,.wa-tooltip:hover{opacity:1;}
+
+/* ─── NAV ─── */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1rem 2.5rem;
+  background:rgba(6,6,15,.0);
+  backdrop-filter:blur(0px);
+  border-bottom:1px solid transparent;
+  transition:all .35s ease;
+}
+.nav.scrolled{
+  padding:.65rem 2.5rem;
+  background:rgba(6,6,15,.96);
+  backdrop-filter:blur(24px);
+  border-bottom-color:var(--border);
+}
+.nav-logo{font-family:'Orbitron',monospace;font-weight:900;font-size:1.25rem;color:var(--cyan);letter-spacing:3px;text-decoration:none;}
+.nav-logo span{color:var(--orange);}
+.nav-links{display:flex;gap:2rem;list-style:none;}
+.nav-links a{
+  font-family:'Rajdhani',sans-serif;font-weight:600;font-size:.85rem;
+  letter-spacing:1.8px;text-transform:uppercase;color:var(--text);text-decoration:none;
+  transition:color .2s;position:relative;
+}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--cyan);transition:width .3s;}
+.nav-links a:hover{color:var(--cyan);}
+.nav-links a:hover::after{width:100%;}
+.nav-cta{
+  background:var(--cyan);color:#000;font-family:'Orbitron',monospace;
+  font-weight:700;font-size:.72rem;padding:.5rem 1.3rem;letter-spacing:1px;
+  border:none;cursor:pointer;text-transform:uppercase;transition:all .2s;
+  clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+}
+.nav-cta:hover{background:#fff;transform:scale(1.04);}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;border:none;background:none;padding:4px;}
+.hamburger span{width:24px;height:2px;background:var(--cyan);display:block;transition:all .3s;}
+.mobile-menu{
+  position:fixed;top:0;right:0;bottom:0;width:280px;z-index:600;
+  background:var(--bg2);border-left:1px solid var(--border);
+  transform:translateX(100%);transition:transform .3s;
+  padding:5rem 2rem 2rem;display:flex;flex-direction:column;gap:1.5rem;
+}
+.mobile-menu.open{transform:translateX(0);}
+.mobile-menu a{font-family:'Rajdhani',sans-serif;font-weight:600;font-size:1.2rem;letter-spacing:2px;text-transform:uppercase;color:var(--text);text-decoration:none;transition:color .2s;border-bottom:1px solid var(--border);padding-bottom:1rem;}
+.mobile-menu a:hover{color:var(--cyan);}
+.mobile-close{position:absolute;top:1.25rem;right:1.25rem;font-size:1.5rem;cursor:pointer;color:var(--muted);background:none;border:none;color:var(--text);}
+
+/* ─── HERO ─── */
+.hero{
+  min-height:100vh;position:relative;display:flex;align-items:center;
+  overflow:hidden;
+}
+.hero-bg-img{
+  position:absolute;inset:0;z-index:0;
+  background:url('assets/image1.jpeg') center/cover no-repeat;
+  filter:brightness(.25) saturate(1.4);
+  transform:scale(1.05);
+  animation:heroZoom 12s ease-in-out infinite alternate;
+}
+@keyframes heroZoom{from{transform:scale(1.05);}to{transform:scale(1.12);}}
+.hero-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(120deg,rgba(6,6,15,.95) 40%,rgba(6,6,15,.5) 75%,rgba(6,6,15,.2) 100%);}
+.hero-grid-lines{
+  position:absolute;inset:0;z-index:1;
+  background-image:linear-gradient(rgba(0,245,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,245,255,.03) 1px,transparent 1px);
+  background-size:60px 60px;
+  animation:gridMove 20s linear infinite;
+}
+@keyframes gridMove{from{transform:translateY(0);}to{transform:translateY(60px);}}
+.hero-glow{position:absolute;right:15%;top:50%;transform:translateY(-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(0,245,255,.12) 0%,transparent 65%);z-index:1;pointer-events:none;animation:breathe 5s ease-in-out infinite;}
+@keyframes breathe{0%,100%{transform:translateY(-50%) scale(1);}50%{transform:translateY(-50%) scale(1.12);}}
+
+.hero-content{position:relative;z-index:2;padding:0 2.5rem;max-width:660px;margin-top:70px;}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(0,245,255,.07);border:1px solid rgba(0,245,255,.25);
+  padding:.35rem 1rem;margin-bottom:1.4rem;
+  font-family:'Share Tech Mono',monospace;font-size:.7rem;color:var(--cyan);letter-spacing:2px;
+  animation:fadeUp .6s ease both;
+}
+.badge-dot{width:6px;height:6px;background:var(--cyan);border-radius:50%;animation:pulse 1.5s ease infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(.6);}}
+.hero h1{font-family:'Orbitron',monospace;font-weight:900;font-size:clamp(2.8rem,7vw,5.2rem);line-height:.92;letter-spacing:-2px;margin-bottom:1.1rem;animation:fadeUp .6s .1s ease both;}
+.hero h1 .l1{display:block;color:var(--text);}
+.hero h1 .l2{display:block;color:var(--cyan);text-shadow:0 0 50px rgba(0,245,255,.45),0 0 100px rgba(0,245,255,.15);}
+.hero h1 .l3{display:block;color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.18);}
+.hero-sub{font-size:1.1rem;color:var(--muted2);line-height:1.75;margin-bottom:2.2rem;max-width:460px;animation:fadeUp .6s .2s ease both;}
+.hero-sub strong{color:var(--text);font-weight:600;}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2.8rem;animation:fadeUp .6s .3s ease both;}
+.btn-p{background:var(--cyan);color:#000;font-family:'Orbitron',monospace;font-weight:700;font-size:.78rem;padding:.85rem 2rem;letter-spacing:1px;border:none;cursor:pointer;clip-path:polygon(12px 0%,100% 0%,calc(100% - 12px) 100%,0% 100%);transition:all .25s;}
+.btn-p:hover{background:#fff;transform:translateY(-3px);box-shadow:0 15px 40px rgba(0,245,255,.3);}
+.btn-s{background:transparent;color:var(--text);font-family:'Orbitron',monospace;font-weight:700;font-size:.78rem;padding:.85rem 2rem;letter-spacing:1px;border:1px solid rgba(255,255,255,.2);cursor:pointer;clip-path:polygon(12px 0%,100% 0%,calc(100% - 12px) 100%,0% 100%);transition:all .25s;}
+.btn-s:hover{border-color:var(--cyan);color:var(--cyan);transform:translateY(-3px);}
+.hero-stats{display:flex;gap:2.5rem;animation:fadeUp .6s .4s ease both;}
+.stat-num{font-family:'Orbitron',monospace;font-size:1.9rem;font-weight:900;color:var(--cyan);}
+.stat-lbl{font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:2px;}
+
+/* HERO RIGHT — stacked photos */
+.hero-right{
+  position:absolute;right:0;top:0;bottom:0;width:44%;z-index:2;
+  display:grid;grid-template-rows:1fr 1fr;grid-template-columns:1fr 1fr;
+  gap:6px;padding:90px 2rem 2rem;
+}
+.himg{overflow:hidden;position:relative;}
+.himg img{width:100%;height:100%;object-fit:cover;transition:transform .5s;}
+.himg:hover img{transform:scale(1.06);}
+.himg-label{position:absolute;bottom:0;left:0;right:0;padding:.5rem .75rem;background:linear-gradient(transparent,rgba(0,0,0,.85));font-family:'Share Tech Mono',monospace;font-size:.58rem;letter-spacing:2px;color:var(--cyan);}
+.himg.tall{grid-row:span 2;}
+.himg.wide{grid-column:span 2;}
+
+/* SCROLL HINT */
+.scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;z-index:3;animation:fadeUp 1s 1s ease both;}
+.scroll-line{width:1px;height:55px;background:linear-gradient(to bottom,transparent,var(--cyan));animation:scrollAnim 2s ease infinite;}
+@keyframes scrollAnim{0%{transform:scaleY(0);transform-origin:top;opacity:1;}100%{transform:scaleY(1);opacity:0;}}
+.scroll-txt{font-family:'Share Tech Mono',monospace;font-size:.62rem;letter-spacing:3px;color:var(--muted);text-transform:uppercase;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
+
+/* ─── MARQUEE ─── */
+.marquee-wrap{background:var(--cyan);padding:.6rem 0;overflow:hidden;position:relative;}
+.marquee-track{display:flex;white-space:nowrap;animation:marquee 16s linear infinite;}
+.marquee-item{font-family:'Orbitron',monospace;font-weight:700;font-size:.65rem;letter-spacing:3px;color:#000;padding:0 2rem;text-transform:uppercase;}
+@keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* ─── SECTIONS ─── */
+.section{padding:5.5rem 2.5rem;}
+.s-inner{max-width:1200px;margin:0 auto;}
+.bg2{background:var(--bg2);}
+.bg3{background:var(--bg3);}
+.s-tag{font-family:'Share Tech Mono',monospace;font-size:.65rem;letter-spacing:3px;color:var(--cyan);text-transform:uppercase;margin-bottom:.65rem;display:flex;align-items:center;gap:10px;}
+.s-tag::before{content:'';width:28px;height:1px;background:var(--cyan);}
+.s-title{font-family:'Orbitron',monospace;font-weight:900;font-size:clamp(1.9rem,4vw,2.9rem);line-height:1.08;margin-bottom:.85rem;}
+.s-title .ac{color:var(--cyan);}
+.s-desc{font-size:1rem;color:var(--muted2);line-height:1.85;margin-bottom:2.8rem;max-width:550px;}
+
+/* reveal animation */
+.reveal{opacity:0;transform:translateY(38px);transition:all .75s cubic-bezier(.16,1,.3,1);}
+.reveal.vis{opacity:1;transform:translateY(0);}
+.d1{transition-delay:.08s;}.d2{transition-delay:.16s;}.d3{transition-delay:.24s;}.d4{transition-delay:.32s;}
+
+/* ─── IMAGE STRIP (between hero & products) ─── */
+.img-strip{display:grid;grid-template-columns:repeat(5,1fr);height:220px;gap:3px;}
+.strip-cell{overflow:hidden;position:relative;}
+.strip-cell img{width:100%;height:100%;object-fit:cover;filter:brightness(.7) saturate(1.3);transition:all .4s;}
+.strip-cell:hover img{filter:brightness(1) saturate(1.5);transform:scale(1.06);}
+.strip-cell .sc-label{position:absolute;bottom:0;left:0;right:0;padding:.4rem .6rem;background:linear-gradient(transparent,rgba(0,0,0,.85));font-family:'Share Tech Mono',monospace;font-size:.55rem;letter-spacing:2px;color:var(--cyan);opacity:0;transition:opacity .3s;}
+.strip-cell:hover .sc-label{opacity:1;}
+
+/* ─── PRODUCTS ─── */
+.prod-header{display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:2.5rem;}
+.prod-filter{display:flex;gap:.5rem;flex-wrap:wrap;}
+.filter-btn{font-family:'Share Tech Mono',monospace;font-size:.62rem;letter-spacing:2px;text-transform:uppercase;padding:.35rem .9rem;background:transparent;border:1px solid var(--border);color:var(--muted2);cursor:pointer;transition:all .2s;}
+.filter-btn.active,.filter-btn:hover{background:rgba(0,245,255,.08);border-color:var(--border2);color:var(--cyan);}
+
+.prod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:1.25rem;}
+.prod-card{background:var(--card);border:1px solid var(--border);overflow:hidden;transition:all .35s;cursor:pointer;position:relative;}
+.prod-card::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(0,245,255,.04),transparent);transition:left .55s;z-index:1;}
+.prod-card:hover::before{left:100%;}
+.prod-card:hover{border-color:rgba(0,245,255,.45);transform:translateY(-6px);box-shadow:0 24px 56px rgba(0,0,0,.5),0 0 30px rgba(0,245,255,.07);}
+.prod-img-wrap{position:relative;overflow:hidden;height:190px;}
+.prod-img{width:100%;height:100%;object-fit:cover;transition:transform .45s;}
+.prod-card:hover .prod-img{transform:scale(1.07);}
+.prod-img-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 55%,rgba(0,0,0,.8));pointer-events:none;}
+.prod-badge{position:absolute;top:10px;right:10px;font-family:'Share Tech Mono',monospace;font-size:.58rem;letter-spacing:2px;padding:.25rem .72rem;text-transform:uppercase;z-index:2;}
+.b-hot{background:var(--orange);color:#000;}
+.b-new{background:var(--cyan);color:#000;}
+.b-pro{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25);}
+.b-exc{background:rgba(160,50,255,.85);color:#fff;}
+.prod-body{padding:1.25rem;}
+.prod-cat{font-family:'Share Tech Mono',monospace;font-size:.6rem;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:.4rem;}
+.prod-name{font-family:'Orbitron',monospace;font-weight:700;font-size:.95rem;margin-bottom:.6rem;line-height:1.3;}
+.prod-desc{font-size:.85rem;color:var(--muted2);line-height:1.65;margin-bottom:1.1rem;}
+.prod-specs{display:flex;gap:1.25rem;margin-bottom:1rem;}
+.spec-item{font-family:'Share Tech Mono',monospace;font-size:.6rem;color:var(--muted);}
+.spec-item strong{display:block;color:var(--text);font-size:.65rem;margin-bottom:1px;}
+.prod-footer{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border);padding-top:1rem;}
+.prod-price{font-family:'Orbitron',monospace;font-size:1.25rem;font-weight:900;color:var(--cyan);}
+.prod-price small{font-size:.6rem;color:var(--muted);font-weight:400;margin-left:3px;}
+.prod-btn{background:transparent;border:1px solid var(--border2);color:var(--cyan);font-family:'Orbitron',monospace;font-size:.62rem;font-weight:700;padding:.5rem 1rem;cursor:pointer;text-transform:uppercase;transition:all .2s;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);}
+.prod-btn:hover{background:var(--cyan);color:#000;border-color:var(--cyan);}
+
+/* ─── WIDE FEATURE BANNER ─── */
+.feat-banner{
+  position:relative;overflow:hidden;height:340px;
+  display:flex;align-items:center;
+}
+.feat-banner-bg{position:absolute;inset:0;background:url('assets/image2.jpeg') center/cover no-repeat;filter:brightness(.3) saturate(1.5);}
+.feat-banner-overlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,6,15,.95) 0%,rgba(6,6,15,.6) 60%,rgba(6,6,15,.1) 100%);}
+.feat-banner-content{position:relative;z-index:2;padding:0 2.5rem;max-width:560px;}
+.feat-banner-content .s-tag{margin-bottom:.5rem;}
+.feat-banner-content h2{font-family:'Orbitron',monospace;font-weight:900;font-size:clamp(1.6rem,3.5vw,2.4rem);margin-bottom:.75rem;}
+.feat-banner-content p{font-size:.95rem;color:var(--muted2);line-height:1.75;}
+
+/* ─── FEATURES GRID ─── */
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);}
+.feat-item{background:var(--bg);padding:2.25rem 1.75rem;position:relative;overflow:hidden;transition:background .3s;}
+.feat-item:hover{background:var(--card);}
+.feat-item::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);opacity:0;transition:opacity .3s;}
+.feat-item:hover::after{opacity:1;}
+.feat-num{font-family:'Orbitron',monospace;font-size:.6rem;color:var(--muted);letter-spacing:2px;margin-bottom:1.2rem;}
+.feat-icon{width:46px;height:46px;background:rgba(0,245,255,.07);border:1px solid rgba(0,245,255,.18);display:flex;align-items:center;justify-content:center;margin-bottom:1rem;font-size:1.5rem;}
+.feat-title{font-family:'Orbitron',monospace;font-weight:700;font-size:.88rem;margin-bottom:.6rem;}
+.feat-desc{font-size:.88rem;color:var(--muted2);line-height:1.75;}
+
+/* ─── GALLERY ─── */
+.gal-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:220px;gap:5px;}
+.gal-cell{overflow:hidden;position:relative;cursor:pointer;}
+.gal-cell img{width:100%;height:100%;object-fit:cover;filter:brightness(.75) saturate(1.2);transition:all .4s;}
+.gal-cell:hover img{filter:brightness(1) saturate(1.5);transform:scale(1.06);}
+.gal-cell:nth-child(1){grid-column:span 2;grid-row:span 2;}
+.gal-cell:nth-child(6){grid-column:span 2;}
+.gal-overlay{position:absolute;inset:0;background:linear-gradient(transparent 45%,rgba(0,0,0,.78));opacity:0;transition:opacity .3s;display:flex;align-items:flex-end;padding:.85rem;}
+.gal-cell:hover .gal-overlay{opacity:1;}
+.gal-label{font-family:'Share Tech Mono',monospace;font-size:.58rem;letter-spacing:2px;color:var(--cyan);}
+.gal-border-accent{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--cyan),transparent);opacity:0;transition:opacity .3s;}
+.gal-cell:hover .gal-border-accent{opacity:1;}
+
+/* ─── ABOUT ─── */
+.about-wrap{display:grid;grid-template-columns:1fr 1fr;gap:4.5rem;align-items:center;}
+.about-img-stack{position:relative;}
+.about-img-main{width:100%;height:360px;object-fit:cover;border:1px solid var(--border);}
+.about-img-secondary{
+  position:absolute;bottom:-24px;right:-24px;
+  width:200px;height:150px;object-fit:cover;
+  border:3px solid var(--bg);outline:1px solid var(--border2);
+}
+.about-badge{position:absolute;top:16px;left:16px;background:rgba(0,245,255,.9);color:#000;font-family:'Orbitron',monospace;font-weight:700;font-size:.65rem;letter-spacing:2px;padding:.4rem .9rem;text-transform:uppercase;}
+.about-text .s-desc{max-width:100%;}
+.about-list{list-style:none;display:flex;flex-direction:column;gap:.9rem;margin:1.75rem 0;}
+.about-list li{display:flex;gap:.75rem;align-items:flex-start;font-size:.92rem;color:var(--muted2);line-height:1.65;}
+.about-list li::before{content:'▶';color:var(--cyan);font-size:.55rem;margin-top:5px;flex-shrink:0;}
+.about-tags{display:flex;flex-wrap:wrap;gap:.5rem;}
+.tag{font-family:'Share Tech Mono',monospace;font-size:.6rem;letter-spacing:1px;padding:.3rem .75rem;background:rgba(0,245,255,.06);border:1px solid rgba(0,245,255,.18);color:var(--cyan);text-transform:uppercase;}
+
+/* ─── STATS BAND ─── */
+.stats-band{
+  background:var(--cyan);padding:2.5rem 2.5rem;
+  display:flex;align-items:center;justify-content:space-around;flex-wrap:wrap;gap:2rem;
+}
+.stat-band-item{text-align:center;}
+.stat-band-num{font-family:'Orbitron',monospace;font-weight:900;font-size:2.2rem;color:#000;}
+.stat-band-lbl{font-family:'Share Tech Mono',monospace;font-size:.65rem;letter-spacing:2px;color:rgba(0,0,0,.7);text-transform:uppercase;margin-top:2px;}
+.stat-band-div{width:1px;height:50px;background:rgba(0,0,0,.2);}
+
+/* ─── REVIEWS ─── */
+.rev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;}
+.rev-card{background:var(--card);border:1px solid var(--border);padding:1.75rem;transition:border-color .3s;}
+.rev-card:hover{border-color:var(--border2);}
+.rev-stars{color:var(--orange);letter-spacing:3px;font-size:.9rem;margin-bottom:.85rem;}
+.rev-text{font-size:.9rem;color:var(--text);line-height:1.72;margin-bottom:1.25rem;font-style:italic;}
+.rev-author{display:flex;align-items:center;gap:.75rem;}
+.rev-avatar{width:36px;height:36px;background:rgba(0,245,255,.1);border:1px solid rgba(0,245,255,.3);display:flex;align-items:center;justify-content:center;font-family:'Orbitron',monospace;font-size:.65rem;font-weight:700;color:var(--cyan);}
+.rev-name{font-weight:600;font-size:.9rem;}
+.rev-loc{font-size:.72rem;color:var(--muted);}
+
+/* ─── SHIPPING ─── */
+.ship-row{display:flex;align-items:center;justify-content:space-around;gap:1rem;padding:2.25rem;background:var(--card);border:1px solid var(--border);flex-wrap:wrap;}
+.ship-item{text-align:center;flex:1;min-width:110px;}
+.ship-icon{font-size:2rem;margin-bottom:.5rem;}
+.ship-label{font-family:'Orbitron',monospace;font-size:.68rem;font-weight:700;color:var(--text);margin-bottom:.25rem;}
+.ship-sub{font-size:.78rem;color:var(--muted2);}
+.ship-div{width:1px;height:50px;background:var(--border);}
+
+/* ─── INSTAGRAM FEED ─── */
+.ig-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;}
+.ig-cell{overflow:hidden;position:relative;aspect-ratio:1;}
+.ig-cell img{width:100%;height:100%;object-fit:cover;filter:brightness(.8);transition:all .35s;}
+.ig-cell:hover img{filter:brightness(1);transform:scale(1.07);}
+.ig-cell-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,245,255,.15);opacity:0;transition:opacity .3s;}
+.ig-cell:hover .ig-cell-overlay{opacity:1;}
+.ig-icon{font-size:1.5rem;}
+.ig-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:.75rem;}
+.ig-handle{display:flex;align-items:center;gap:.75rem;}
+.ig-handle-text{font-family:'Orbitron',monospace;font-weight:700;font-size:1rem;color:var(--text);}
+.ig-handle-sub{font-size:.78rem;color:var(--muted);font-family:'Share Tech Mono',monospace;letter-spacing:1px;}
+
+/* ─── CTA ─── */
+.cta-sec{
+  position:relative;overflow:hidden;
+  background:url('assets/image3.jpeg') center/cover no-repeat;
+}
+.cta-sec::before{content:'';position:absolute;inset:0;background:rgba(6,6,15,.88);}
+.cta-bg-txt{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-family:'Orbitron',monospace;font-size:10rem;font-weight:900;color:rgba(0,245,255,.025);white-space:nowrap;pointer-events:none;z-index:1;}
+.cta-inner{position:relative;z-index:2;text-align:center;}
+.cta-inner .s-tag{justify-content:center;}
+.cta-inner .s-tag::before{display:none;}
+.cta-inner .s-title{font-size:clamp(2rem,5.5vw,3.5rem);}
+.cta-inner .s-desc{margin:0 auto 2.25rem;text-align:center;}
+.cta-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+.contact-chips{display:flex;gap:1.75rem;justify-content:center;margin-top:1.75rem;flex-wrap:wrap;}
+.chip{display:flex;align-items:center;gap:6px;font-family:'Share Tech Mono',monospace;font-size:.7rem;color:var(--muted2);}
+.chip-dot{width:5px;height:5px;background:var(--cyan);border-radius:50%;animation:pulse 2s ease infinite;}
+
+/* ─── FOOTER ─── */
+.footer{background:var(--bg2);border-top:1px solid var(--border);padding:3.5rem 2.5rem 2rem;}
+.footer-inner{max-width:1200px;margin:0 auto;}
+.footer-top{display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem;}
+.footer-logo{font-family:'Orbitron',monospace;font-weight:900;font-size:1.4rem;color:var(--cyan);letter-spacing:3px;margin-bottom:.65rem;}
+.footer-logo span{color:var(--orange);}
+.footer-desc{font-size:.83rem;color:var(--muted2);line-height:1.75;max-width:230px;margin-bottom:1.25rem;}
+.footer-social{display:flex;gap:.6rem;}
+.soc-btn{width:32px;height:32px;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.7rem;cursor:pointer;transition:all .2s;color:var(--muted2);text-decoration:none;font-family:'Orbitron',monospace;font-weight:700;}
+.soc-btn:hover{background:var(--cyan);color:#000;border-color:var(--cyan);}
+.footer-col h4{font-family:'Orbitron',monospace;font-size:.65rem;font-weight:700;letter-spacing:2px;color:var(--text);text-transform:uppercase;margin-bottom:1.1rem;}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.55rem;}
+.footer-col ul a{font-size:.83rem;color:var(--muted2);text-decoration:none;transition:color .2s;}
+.footer-col ul a:hover{color:var(--cyan);}
+.footer-bottom{border-top:1px solid var(--border);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.75rem;}
+.footer-copy{font-family:'Share Tech Mono',monospace;font-size:.65rem;color:var(--muted);letter-spacing:1px;}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:1024px){
+  .hero-right{display:none;}
+  .hero-content{max-width:100%;}
+  .about-wrap{grid-template-columns:1fr;gap:3rem;}
+  .about-img-secondary{display:none;}
+  .gal-grid{grid-template-columns:repeat(3,1fr);}
+  .gal-cell:nth-child(1){grid-column:span 1;grid-row:span 1;}
+  .gal-cell:nth-child(6){grid-column:span 1;}
+  .ig-grid{grid-template-columns:repeat(4,1fr);}
+  .footer-top{grid-template-columns:1fr 1fr;gap:2rem;}
+}
+@media(max-width:768px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-links{display:none;}
+  .hamburger{display:flex;}
+  .section{padding:3.5rem 1.25rem;}
+  .rev-grid{grid-template-columns:1fr;}
+  .gal-grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:180px;}
+  .img-strip{grid-template-columns:repeat(3,1fr);height:180px;}
+  .ig-grid{grid-template-columns:repeat(3,1fr);}
+  .hero-stats{gap:1.5rem;}
+  .ship-div{display:none;}
+  .stats-band{gap:1.25rem;}
+  .stat-band-div{display:none;}
+}
+@media(max-width:480px){
+  .hero h1{font-size:2.6rem;}
+  .prod-grid{grid-template-columns:1fr;}
+  .footer-top{grid-template-columns:1fr;}
+  .img-strip{grid-template-columns:repeat(2,1fr);height:160px;}
+  .ig-grid{grid-template-columns:repeat(2,1fr);}
+  .gal-grid{grid-template-columns:1fr;grid-auto-rows:200px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ─── WHATSAPP FLOAT ─── -->
+<a class="wa-float" href="https://wa.me/919000000000?text=Hi%20Revvx.Wheels!%20I%27m%20interested%20in%20your%20RC%20drift%20cars." target="_blank" rel="noopener" title="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+<div class="wa-tooltip">CHAT WITH US ON WHATSAPP</div>
+
+<!-- ─── NAV ─── -->
+<nav class="nav" id="nav">
+  <a class="nav-logo" href="#">REVVX<span>.</span>WHEELS</a>
+  <ul class="nav-links">
+    <li><a href="#products">Products</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#instagram">Feed</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Order Now</button>
+  <button class="hamburger" id="ham" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="toggleMenu()">✕</button>
+  <a href="#products" onclick="toggleMenu()">Products</a>
+  <a href="#features" onclick="toggleMenu()">Features</a>
+  <a href="#gallery" onclick="toggleMenu()">Gallery</a>
+  <a href="#about" onclick="toggleMenu()">About</a>
+  <a href="#contact" onclick="toggleMenu()">Contact</a>
+</div>
+
+<!-- ─── HERO ─── -->
+<section class="hero">
+  <div class="hero-bg-img"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-grid-lines"></div>
+  <div class="hero-glow"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge"><span class="badge-dot"></span>EST. DEC 2025 · KERALA, INDIA</div>
+    <h1>
+      <span class="l1">INDIA'S</span>
+      <span class="l2">PREMIER</span>
+      <span class="l3">DRIFT RC</span>
+    </h1>
+    <p class="hero-sub"><strong>Hobby-grade micro drift cars</strong> for serious enthusiasts. Jiabalie & Enoze series — tested for drift precision, shipped pan-India.</p>
+    <div class="hero-actions">
+      <button class="btn-p" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Shop Now</button>
+      <button class="btn-s" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">Our Story</button>
+    </div>
+    <div class="hero-stats">
+      <div><div class="stat-num">500+</div><div class="stat-lbl">Cars Shipped</div></div>
+      <div><div class="stat-num">100%</div><div class="stat-lbl">Drift Tested</div></div>
+      <div><div class="stat-num">28+</div><div class="stat-lbl">States Delivered</div></div>
+    </div>
+  </div>
+
+  <!-- RIGHT PHOTO PANELS -->
+  <div class="hero-right">
+    <div class="himg tall">
+      <img src="assets/image4.jpeg" alt="Jiabalie Mini Drift Car"/>
+      <div class="himg-label">JIABALIE MINI DRIFT</div>
+    </div>
+    <div class="himg">
+      <img src="assets/image5.jpeg" alt="RC Car Detail"/>
+      <div class="himg-label">STUDIO SHOT</div>
+    </div>
+    <div class="himg">
+      <img src="assets/image6.jpeg" alt="LED RC Car"/>
+      <div class="himg-label">LED EDITION</div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    <span class="scroll-txt">Scroll</span>
+  </div>
+</section>
+
+<!-- ─── MARQUEE ─── -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">Mini Drift RC /// </span><span class="marquee-item">Kerala India /// </span><span class="marquee-item">JDM Culture /// </span><span class="marquee-item">Jiabalie Series /// </span><span class="marquee-item">Enoze Dodge /// </span><span class="marquee-item">Cash On Delivery /// </span><span class="marquee-item">Free Tech Support /// </span><span class="marquee-item">India-Wide Shipping /// </span><span class="marquee-item">Unbox The Unseen /// </span>
+    <span class="marquee-item">Mini Drift RC /// </span><span class="marquee-item">Kerala India /// </span><span class="marquee-item">JDM Culture /// </span><span class="marquee-item">Jiabalie Series /// </span><span class="marquee-item">Enoze Dodge /// </span><span class="marquee-item">Cash On Delivery /// </span><span class="marquee-item">Free Tech Support /// </span><span class="marquee-item">India-Wide Shipping /// </span><span class="marquee-item">Unbox The Unseen /// </span>
+  </div>
+</div>
+
+<!-- ─── IMAGE STRIP ─── -->
+<div class="img-strip">
+  <div class="strip-cell"><img src="assets/image7.jpeg" alt="Drift"/><div class="sc-label">DRIFT ACTION</div></div>
+  <div class="strip-cell"><img src="assets/image8.jpeg" alt="RC Controller"/><div class="sc-label">2.4GHz CONTROLLER</div></div>
+  <div class="strip-cell"><img src="assets/image9.jpeg" alt="RC Car"/><div class="sc-label">ENOZE DODGE</div></div>
+  <div class="strip-cell"><img src="assets/image10.jpeg" alt="Parts"/><div class="sc-label">UPGRADE PARTS</div></div>
+  <div class="strip-cell"><img src="assets/image11.jpeg" alt="Custom Build"/><div class="sc-label">PRO CUSTOM BUILD</div></div>
+</div>
+
+<!-- ─── PRODUCTS ─── -->
+<section class="section bg2" id="products">
+  <div class="s-inner">
+    <div class="prod-header reveal">
+      <div>
+        <div class="s-tag">Our Lineup</div>
+        <h2 class="s-title">BUILT FOR <span class="ac">DRIFT</span></h2>
+        <p class="s-desc" style="margin-bottom:0;">Every car is performance-verified before it reaches your hands.</p>
+      </div>
+      <div class="prod-filter">
+        <button class="filter-btn active">All</button>
+        <button class="filter-btn">Mini Drifters</button>
+        <button class="filter-btn">Scale Muscle</button>
+        <button class="filter-btn">Parts</button>
+      </div>
+    </div>
+    <div class="prod-grid">
+
+      <div class="prod-card reveal d1">
+        <div class="prod-img-wrap">
+          <img class="prod-img" src="assets/image12.jpeg" alt="Jiabalie Mini Drift v2"/>
+          <div class="prod-img-overlay"></div>
+          <span class="prod-badge b-hot">HOT</span>
+        </div>
+        <div class="prod-body">
+          <div class="prod-cat">Mini Drifters</div>
+          <div class="prod-name">Jiabalie Mini Drift v2</div>
+          <p class="prod-desc">Gyro-assisted RWD. Palm-sized JDM beast with adjustable drift angle and proportional steering.</p>
+          <div class="prod-specs">
+            <div class="spec-item"><strong>1:64</strong>Scale</div>
+            <div class="spec-item"><strong>15m</strong>Range</div>
+            <div class="spec-item"><strong>Gyro</strong>Assist</div>
+          </div>
+          <div class="prod-footer"><div class="prod-price">₹1,299<small>onwards</small></div><button class="prod-btn">Buy Now</button></div>
+        </div>
+      </div>
+
+      <div class="prod-card reveal d2">
+        <div class="prod-img-wrap">
+          <img class="prod-img" src="assets/image13.jpeg" alt="Enoze Dodge Mini RC"/>
+          <div class="prod-img-overlay"></div>
+          <span class="prod-badge b-new">NEW</span>
+        </div>
+        <div class="prod-body">
+          <div class="prod-cat">Scale Muscle</div>
+          <div class="prod-name">Enoze Dodge Mini RC</div>
+          <p class="prod-desc">American muscle meets micro-precision. Real suspension travel, proportional throttle & steering.</p>
+          <div class="prod-specs">
+            <div class="spec-item"><strong>1:32</strong>Scale</div>
+            <div class="spec-item"><strong>12km/h</strong>Speed</div>
+            <div class="spec-item"><strong>AWD</strong>Drive</div>
+          </div>
+          <div class="prod-footer"><div class="prod-price">₹2,499<small>onwards</small></div><button class="prod-btn">Buy Now</button></div>
+        </div>
+      </div>
+
+      <div class="prod-card reveal d3">
+        <div class="prod-img-wrap">
+          <img class="prod-img" src="assets/image14.jpeg" alt="Jiabalie LED Edition"/>
+          <div class="prod-img-overlay"></div>
+          <span class="prod-badge b-hot">HOT</span>
+        </div>
+        <div class="prod-body">
+          <div class="prod-cat">Mini Drifters</div>
+          <div class="prod-name">Jiabalie LED Edition</div>
+          <p class="prod-desc">Full underglow LED system, 3 drift presets, upgraded brushless motor. Night runs sorted.</p>
+          <div class="prod-specs">
+            <div class="spec-item"><strong>RGB</strong>LED</div>
+            <div class="spec-item"><strong>Brushless</strong>Motor</div>
+            <div class="spec-item"><strong>3</strong>Presets</div>
+          </div>
+          <div class="prod-footer"><div class="prod-price">₹1,899<small>onwards</small></div><button class="prod-btn">Buy Now</button></div>
+        </div>
+      </div>
+
+      <div class="prod-card reveal d1">
+        <div class="prod-img-wrap">
+          <img class="prod-img" src="assets/image15.jpeg" alt="Performance Pack"/>
+          <div class="prod-img-overlay"></div>
+          <span class="prod-badge b-pro">PRO</span>
+        </div>
+        <div class="prod-body">
+          <div class="prod-cat">Parts & Upgrades</div>
+          <div class="prod-name">Performance Pack</div>
+          <p class="prod-desc">Drift tires, high-drain LiPo cells and brushless motors. Unlock your car's full potential.</p>
+          <div class="prod-specs">
+            <div class="spec-item"><strong>Universal</strong>Compat.</div>
+            <div class="spec-item"><strong>OEM+</strong>Grade</div>
+            <div class="spec-item"><strong>Kit</strong>Bundle</div>
+          </div>
+          <div class="prod-footer"><div class="prod-price">₹399<small>per part</small></div><button class="prod-btn">Buy Now</button></div>
+        </div>
+      </div>
+
+      <div class="prod-card reveal d2">
+        <div class="prod-img-wrap">
+          <img class="prod-img" src="assets/image16.jpeg" alt="Pro RTR Build"/>
+          <div class="prod-img-overlay"></div>
+          <span class="prod-badge b-exc">EXCLUSIVE</span>
+        </div>
+        <div class="prod-body">
+          <div class="prod-cat">Custom Builds</div>
+          <div class="prod-name">Pro RTR Setup</div>
+          <p class="prod-desc">Hand-assembled, drift-tuned by our team. Ready to run straight from the box. Zero setup required.</p>
+          <div class="prod-specs">
+            <div class="spec-item"><strong>100%</strong>Tested</div>
+            <div class="spec-item"><strong>RTR</strong>Setup</div>
+            <div class="spec-item"><strong>Custom</strong>Tune</div>
+          </div>
+          <div class="prod-footer"><div class="prod-price">₹3,999<small>per build</small></div><button class="prod-btn">Buy Now</button></div>
+        </div>
+      </div>
+
+      <div class="prod-card reveal d3">
+        <div class="prod-img-wrap">
+          <img class="prod-img" src="assets/image17.jpeg" alt="2.4GHz Controller"/>
+          <div class="prod-img-overlay"></div>
+          <span class="prod-badge b-new">NEW</span>
+        </div>
+        <div class="prod-body">
+          <div class="prod-cat">Controllers</div>
+          <div class="prod-name">2.4GHz Drift Controller</div>
+          <p class="prod-desc">Pistol-grip transmitter with adjustable steering trim, throttle curve, and anti-interference chip.</p>
+          <div class="prod-specs">
+            <div class="spec-item"><strong>2.4GHz</strong>Band</div>
+            <div class="spec-item"><strong>30m</strong>Range</div>
+            <div class="spec-item"><strong>Universal</strong>Fit</div>
+          </div>
+          <div class="prod-footer"><div class="prod-price">₹899<small>onwards</small></div><button class="prod-btn">Buy Now</button></div>
+        </div>
+      </div>
+
+      <div class="prod-card reveal d1">
+        <div class="prod-img-wrap">
+          <img class="prod-img" src="assets/image18.jpeg" alt="Starter Bundle"/>
+          <div class="prod-img-overlay"></div>
+          <span class="prod-badge b-hot">DEAL</span>
+        </div>
+        <div class="prod-body">
+          <div class="prod-cat">Bundles</div>
+          <div class="prod-name">Beginner Drift Bundle</div>
+          <p class="prod-desc">Jiabalie v2 + spare tires + extra battery + carry case. Everything to start your drift journey.</p>
+          <div class="prod-specs">
+            <div class="spec-item"><strong>Car</strong>+ Extras</div>
+            <div class="spec-item"><strong>5</strong>Items</div>
+            <div class="spec-item"><strong>Best</strong>Value</div>
+          </div>
+          <div class="prod-footer"><div class="prod-price">₹1,799<small>bundle</small></div><button class="prod-btn">Buy Now</button></div>
+        </div>
+      </div>
+
+      <div class="prod-card reveal d2">
+        <div class="prod-img-wrap">
+          <img class="prod-img" src="assets/image19.jpeg" alt="Drift Track Mat"/>
+          <div class="prod-img-overlay"></div>
+          <span class="prod-badge b-new">NEW</span>
+        </div>
+        <div class="prod-body">
+          <div class="prod-cat">Accessories</div>
+          <div class="prod-name">Mini Drift Track Mat</div>
+          <p class="prod-desc">Printed circuit track mat, 120×80cm. Low friction surface optimized for Jiabalie drift angles.</p>
+          <div class="prod-specs">
+            <div class="spec-item"><strong>120×80</strong>cm</div>
+            <div class="spec-item"><strong>PVC</strong>Surface</div>
+            <div class="spec-item"><strong>Rollable</strong>Design</div>
+          </div>
+          <div class="prod-footer"><div class="prod-price">₹599<small>per mat</small></div><button class="prod-btn">Buy Now</button></div>
+        </div>
+      </div>
+
+    </div><!-- end prod-grid -->
+  </div>
+</section>
+
+<!-- ─── STATS BAND ─── -->
+<div class="stats-band">
+  <div class="stat-band-item"><div class="stat-band-num">500+</div><div class="stat-band-lbl">Cars Shipped</div></div>
+  <div class="stat-band-div"></div>
+  <div class="stat-band-item"><div class="stat-band-num">100%</div><div class="stat-band-lbl">Drift Tested</div></div>
+  <div class="stat-band-div"></div>
+  <div class="stat-band-item"><div class="stat-band-num">28+</div><div class="stat-band-lbl">States Delivered</div></div>
+  <div class="stat-band-div"></div>
+  <div class="stat-band-item"><div class="stat-band-num">4.9★</div><div class="stat-band-lbl">Avg. Rating</div></div>
+  <div class="stat-band-div"></div>
+  <div class="stat-band-item"><div class="stat-band-num">COD</div><div class="stat-band-lbl">Available</div></div>
+</div>
+
+<!-- ─── FEATURE BANNER ─── -->
+<div class="feat-banner">
+  <div class="feat-banner-bg"></div>
+  <div class="feat-banner-overlay"></div>
+  <div class="feat-banner-content reveal">
+    <div class="s-tag">Our Promise</div>
+    <h2 style="font-family:'Orbitron',monospace;font-weight:900;font-size:clamp(1.6rem,3.5vw,2.4rem);margin-bottom:.75rem;">EVERY CAR <span style="color:var(--cyan);">DRIFT-TESTED</span><br>BEFORE SHIPPING</h2>
+    <p style="font-size:.95rem;color:var(--muted2);line-height:1.75;">We run 50+ drift laps on each car before packing it. If it doesn't drift perfectly, you don't get it. That's the Revvx standard.</p>
+  </div>
+</div>
+
+<!-- ─── FEATURES ─── -->
+<section class="section" id="features">
+  <div class="s-inner">
+    <div class="reveal">
+      <div class="s-tag">Why Revvx</div>
+      <h2 class="s-title">THE <span class="ac">REVVX</span> DIFFERENCE</h2>
+      <p class="s-desc">Not a dropshipper. Not a reseller. We're enthusiasts who happen to run India's best micro RC store.</p>
+    </div>
+    <div class="feat-grid reveal">
+      <div class="feat-item"><div class="feat-num">01</div><div class="feat-icon">🎯</div><div class="feat-title">Drift-Tested Precision</div><p class="feat-desc">50+ drift laps on our test surface before every shipment. We don't ship duds.</p></div>
+      <div class="feat-item"><div class="feat-num">02</div><div class="feat-icon">🚀</div><div class="feat-title">India-Wide Delivery</div><p class="feat-desc">Fast shipping from Kerala to your doorstep. Cash on delivery available pan-India.</p></div>
+      <div class="feat-item"><div class="feat-num">03</div><div class="feat-icon">🛠️</div><div class="feat-title">Expert Tech Support</div><p class="feat-desc">WhatsApp support for setup, gyro tuning, and upgrades — beginner or pro.</p></div>
+      <div class="feat-item"><div class="feat-num">04</div><div class="feat-icon">🔋</div><div class="feat-title">OEM + Upgraded Parts</div><p class="feat-desc">Genuine Jiabalie & Enoze parts plus performance upgrades always in stock.</p></div>
+      <div class="feat-item"><div class="feat-num">05</div><div class="feat-icon">📦</div><div class="feat-title">Secure Packaging</div><p class="feat-desc">Custom foam-padded boxes. Your car arrives race-ready, not rattled.</p></div>
+      <div class="feat-item"><div class="feat-num">06</div><div class="feat-icon">⚡</div><div class="feat-title">JDM Community Focus</div><p class="feat-desc">Built by enthusiasts for enthusiasts. We live and breathe micro drift culture.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── GALLERY ─── -->
+<section class="section bg2" id="gallery">
+  <div class="s-inner">
+    <div class="reveal">
+      <div class="s-tag">In The Wild</div>
+      <h2 class="s-title">THE <span class="ac">GALLERY</span></h2>
+      <p class="s-desc">Real cars, real drifts, real customers. This is what Revvx.Wheels looks like out of the box.</p>
+    </div>
+    <div class="gal-grid reveal">
+      <div class="gal-cell"><img src="assets/image20.jpeg" alt="Drift Car"/><div class="gal-border-accent"></div><div class="gal-overlay"><span class="gal-label">JIABALIE · IN ACTION</span></div></div>
+      <div class="gal-cell"><img src="assets/image21.jpeg" alt="RC Studio"/><div class="gal-border-accent"></div><div class="gal-overlay"><span class="gal-label">STUDIO SHOT</span></div></div>
+      <div class="gal-cell"><img src="assets/image22.jpeg" alt="Enoze Detail"/><div class="gal-border-accent"></div><div class="gal-overlay"><span class="gal-label">ENOZE DODGE DETAIL</span></div></div>
+      <div class="gal-cell"><img src="assets/image23.jpeg" alt="LED Night"/><div class="gal-border-accent"></div><div class="gal-overlay"><span class="gal-label">LED EDITION · NIGHT</span></div></div>
+      <div class="gal-cell"><img src="assets/image24.jpeg" alt="Controller"/><div class="gal-border-accent"></div><div class="gal-overlay"><span class="gal-label">2.4GHz CONTROLLER</span></div></div>
+      <div class="gal-cell"><img src="assets/image1.jpeg" alt="Custom Build"/><div class="gal-border-accent"></div><div class="gal-overlay"><span class="gal-label">PRO CUSTOM BUILD · RTR</span></div></div>
+      <div class="gal-cell"><img src="assets/image2.jpeg" alt="Upgrade Parts"/><div class="gal-border-accent"></div><div class="gal-overlay"><span class="gal-label">UPGRADE PARTS KIT</span></div></div>
+      <div class="gal-cell"><img src="assets/image3.jpeg" alt="Starter Bundle"/><div class="gal-border-accent"></div><div class="gal-overlay"><span class="gal-label">BEGINNER BUNDLE</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── ABOUT ─── -->
+<section class="section" id="about">
+  <div class="s-inner about-wrap">
+    <div class="about-img-stack reveal">
+      <img class="about-img-main" src="assets/image4.jpeg" alt="Revvx Workshop"/>
+      <img class="about-img-secondary" src="assets/image5.jpeg" alt="Detail"/>
+      <span class="about-badge">Since Dec 2025</span>
+    </div>
+    <div class="about-text reveal">
+      <div class="s-tag">Our Story</div>
+      <h2 class="s-title">MORE THAN A <span class="ac">STORE</span></h2>
+      <p class="s-desc">We started Revvx.Wheels because we couldn't find a trustworthy source for quality micro drift RC cars in India. So we became one.</p>
+      <ul class="about-list">
+        <li>Every car is hand-tested for gyro response, drift angle, and motor performance before dispatch.</li>
+        <li>We stock genuine Jiabalie Mini Drift series and Enoze Dodge RC Mini — no knock-offs, ever.</li>
+        <li>Our base is Kerala, but our passion reaches every corner of India with fast, trackable delivery.</li>
+        <li>Post-purchase WhatsApp support — tuning tips, spare parts guidance, and community access.</li>
+      </ul>
+      <div class="about-tags">
+        <span class="tag">JDM</span><span class="tag">Jiabalie</span><span class="tag">Enoze</span><span class="tag">Micro Drift</span><span class="tag">Kerala</span><span class="tag">India</span><span class="tag">Hobby Grade</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── REVIEWS ─── -->
+<section class="section bg2">
+  <div class="s-inner">
+    <div class="reveal">
+      <div class="s-tag">Real Buyers</div>
+      <h2 class="s-title">THE COMMUNITY <span class="ac">SPEAKS</span></h2>
+    </div>
+    <div class="rev-grid reveal">
+      <div class="rev-card"><div class="rev-stars">★★★★★</div><p class="rev-text">"The Jiabalie drift car is insane for its price. Revvx shipped it in 3 days, perfectly packaged. Already ordered a second one!"</p><div class="rev-author"><div class="rev-avatar">AR</div><div><div class="rev-name">Arjun R.</div><div class="rev-loc">Bangalore</div></div></div></div>
+      <div class="rev-card"><div class="rev-stars">★★★★★</div><p class="rev-text">"Support team helped me tune my gyro sensitivity over WhatsApp. That kind of service is rare. 10/10 will buy again."</p><div class="rev-author"><div class="rev-avatar">SK</div><div><div class="rev-name">Suresh K.</div><div class="rev-loc">Mumbai</div></div></div></div>
+      <div class="rev-card"><div class="rev-stars">★★★★★</div><p class="rev-text">"Pro RTR build arrived drifting perfectly out of the box. Worth every rupee. This is the real deal from real enthusiasts."</p><div class="rev-author"><div class="rev-avatar">VM</div><div><div class="rev-name">Vikram M.</div><div class="rev-loc">Chennai</div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SHIPPING STRIP ─── -->
+<section class="section" style="padding-top:0;padding-bottom:3rem;">
+  <div class="s-inner">
+    <div class="ship-row reveal">
+      <div class="ship-item"><div class="ship-icon">📦</div><div class="ship-label">Cash on Delivery</div><div class="ship-sub">Available pan-India</div></div>
+      <div class="ship-div"></div>
+      <div class="ship-item"><div class="ship-icon">🚚</div><div class="ship-label">Fast Shipping</div><div class="ship-sub">3–7 business days</div></div>
+      <div class="ship-div"></div>
+      <div class="ship-item"><div class="ship-icon">🔒</div><div class="ship-label">Secure Packaging</div><div class="ship-sub">Zero damage guarantee</div></div>
+      <div class="ship-div"></div>
+      <div class="ship-item"><div class="ship-icon">💬</div><div class="ship-label">WhatsApp Support</div><div class="ship-sub">Expert guidance</div></div>
+      <div class="ship-div"></div>
+      <div class="ship-item"><div class="ship-icon">🔄</div><div class="ship-label">Easy Returns</div><div class="ship-sub">7-day policy</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── INSTAGRAM FEED ─── -->
+<section class="section bg3" id="instagram">
+  <div class="s-inner">
+    <div class="ig-header reveal">
+      <div class="ig-handle">
+        <div>
+          <div class="ig-handle-text">@revvx.wheels</div>
+          <div class="ig-handle-sub">Follow us on Instagram · 33 Followers & Growing</div>
+        </div>
+      </div>
+      <a href="https://instagram.com/revvx.wheels" target="_blank" style="text-decoration:none;"><button class="btn-s" style="font-size:.7rem;padding:.6rem 1.4rem;">Follow on Instagram</button></a>
+    </div>
+    <div class="ig-grid reveal">
+      <div class="ig-cell"><img src="assets/image6.jpeg" alt="IG Post"/><div class="ig-cell-overlay"><span class="ig-icon">📷</span></div></div>
+      <div class="ig-cell"><img src="assets/image7.jpeg" alt="IG Post"/><div class="ig-cell-overlay"><span class="ig-icon">📷</span></div></div>
+      <div class="ig-cell"><img src="assets/image8.jpeg" alt="IG Post"/><div class="ig-cell-overlay"><span class="ig-icon">📷</span></div></div>
+      <div class="ig-cell"><img src="assets/image9.jpeg" alt="IG Post"/><div class="ig-cell-overlay"><span class="ig-icon">📷</span></div></div>
+      <div class="ig-cell"><img src="assets/image10.jpeg" alt="IG Post"/><div class="ig-cell-overlay"><span class="ig-icon">📷</span></div></div>
+      <div class="ig-cell"><img src="assets/image11.jpeg" alt="IG Post"/><div class="ig-cell-overlay"><span class="ig-icon">📷</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CTA ─── -->
+<section class="section cta-sec" id="contact">
+  <div class="cta-bg-txt">DRIFT</div>
+  <div class="s-inner cta-inner reveal">
+    <div class="s-tag">Ready to Shred</div>
+    <h2 class="s-title">UNBOX THE <span class="ac">UNSEEN</span></h2>
+    <p class="s-desc">India's most trusted micro drift RC store. Order yours today and join the Kerala drift revolution.</p>
+    <div class="cta-actions">
+      <button class="btn-p" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Shop All Cars</button>
+      <a href="https://wa.me/919000000000?text=Hi%20Revvx.Wheels!%20I%27m%20interested%20in%20ordering." target="_blank" style="text-decoration:none;"><button class="btn-s">Chat on WhatsApp</button></a>
+    </div>
+    <div class="contact-chips">
+      <span class="chip"><span class="chip-dot"></span>Cash on Delivery Available</span>
+      <span class="chip"><span class="chip-dot"></span>Ships From Kerala</span>
+      <span class="chip"><span class="chip-dot"></span>@revvx.wheels on Instagram</span>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">REVVX<span>.</span>WHEELS</div>
+        <p class="footer-desc">India's premier destination for hobby-grade mini drift RC cars. Tested, trusted, and shipped from Kerala.</p>
+        <div class="footer-social">
+          <a class="soc-btn" href="https://instagram.com/revvx.wheels" target="_blank" title="Instagram">IG</a>
+          <a class="soc-btn" href="https://wa.me/919000000000" target="_blank" title="WhatsApp">WA</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <ul>
+          <li><a href="#">Mini Drifters</a></li>
+          <li><a href="#">Scale Muscle</a></li>
+          <li><a href="#">Parts & Upgrades</a></li>
+          <li><a href="#">Custom Builds</a></li>
+          <li><a href="#">Controllers</a></li>
+          <li><a href="#">Bundles</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Info</h4>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Shipping Policy</a></li>
+          <li><a href="#">Returns Policy</a></li>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Track Order</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="https://instagram.com/revvx.wheels" target="_blank">Instagram</a></li>
+          <li><a href="https://wa.me/919000000000" target="_blank">WhatsApp Us</a></li>
+          <li><a href="mailto:revvxwheels@gmail.com">Email Us</a></li>
+          <li><a href="#">Kerala, India</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2025–2026 Revvx.Wheels · All rights reserved · Built with ❤️ in Kerala 🇮🇳</span>
+      <div class="footer-social">
+        <a class="soc-btn" href="https://instagram.com/revvx.wheels" target="_blank">IG</a>
+        <a class="soc-btn" href="https://wa.me/919000000000" target="_blank">WA</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ─── SCRIPTS ─── -->
+<script>
+// Sticky nav
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').classList.toggle('scrolled',window.scrollY>60);
+});
+
+// Mobile menu
+function toggleMenu(){
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+
+// Reveal on scroll
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});
+},{threshold:.08});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+// Product filter buttons
+document.querySelectorAll('.filter-btn').forEach(btn=>{
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
